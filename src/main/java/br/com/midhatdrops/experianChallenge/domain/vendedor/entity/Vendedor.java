@@ -32,10 +32,11 @@ public class Vendedor {
     private Date updatedAt;
 
 
-    public Vendedor(Long id, final String name, final String cellphone, final Integer age, final String city, final StateEnums state, final String region) {
+    public Vendedor(Long id, final String name,  String cellphone, final Integer age, final String city, final StateEnums state, final String region) {
         this.id = id;
         this.name = name;
-        if(validateCellphone(cellphone)) {
+         String trim = cellphone.replace("-", "").replaceAll("\\s","");
+        if(validateCellphone(trim)) {
             this.cellphone = cellphone;
         } else {
             throw new MalformedCellphoneException(cellphone);
@@ -46,11 +47,11 @@ public class Vendedor {
         this.region = region;
     }
 
-    public Vendedor(final VendedorRequestDTO requestDTO) {
+    public Vendedor( VendedorRequestDTO requestDTO) {
         this.id = requestDTO.getId() == null ? null : requestDTO.getId();
         this.name = requestDTO.getName().trim();
         if(validateCellphone(requestDTO.getCellphone())) {
-            this.cellphone = requestDTO.getCellphone().trim();
+            this.cellphone = requestDTO.getCellphone();
         } else {
             throw new MalformedCellphoneException(requestDTO.getCellphone());
         }
