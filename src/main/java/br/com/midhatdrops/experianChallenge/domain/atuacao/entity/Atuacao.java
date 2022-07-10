@@ -36,4 +36,12 @@ public class Atuacao {
         this.region = requestDTO.getRegiao();
         this.states = requestDTO.getEstados();
     }
+
+    @Override
+    public String toString() {
+        return "Atuacao{" +
+                "region='" + region + '\'' +
+                ", states=" + states +
+                '}';
+    }
 }

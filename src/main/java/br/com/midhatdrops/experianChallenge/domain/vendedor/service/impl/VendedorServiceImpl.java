@@ -39,6 +39,7 @@ public class VendedorServiceImpl implements VendedorService {
     public VendedorRequestDTO insert(VendedorRequestDTO requestDTO) {
         try {
             final Vendedor vendedor = new Vendedor(requestDTO);
+            log.info("Vendedor wil be saved! " + vendedor);
             final Vendedor savedEntity = repository.save(vendedor);
             return new VendedorRequestDTO(savedEntity);
         } catch (MalformedCellphoneException malformedCellphoneException) {
