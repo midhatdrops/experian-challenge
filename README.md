@@ -10,7 +10,7 @@
 - H2
 - OpenAPI (Swagger)
 
-> O projeto pode ser utilizado localmente através do profile "local" ou então através do Dockerfile sendo exposta a porta 8080.
+> O projeto pode ser utilizado localmente através do profile "local" na porta 8081 ou então através do Dockerfile sendo exposta a porta 8080.
 
 
 #### A documentação dos endpoints pode ser encontrada em: /swagger-ui/index.html
