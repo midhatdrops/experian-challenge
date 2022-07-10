@@ -3,8 +3,10 @@ package br.com.midhatdrops.experianChallenge.domain.atuacao.entity;
 import br.com.midhatdrops.experianChallenge.domain.atuacao.infrasctructure.dto.AtuacaoRequestDTO;
 import br.com.midhatdrops.experianChallenge.domain.vendedor.enums.StateEnums;
 import lombok.Getter;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.List;
 
 @Entity
@@ -17,6 +19,8 @@ public class Atuacao {
     private String region;
 
     @ElementCollection
+    @NotBlank
+    @NonNull
     private List<StateEnums> states;
 
     public Atuacao() {

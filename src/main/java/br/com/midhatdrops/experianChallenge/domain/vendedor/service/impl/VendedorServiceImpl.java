@@ -8,6 +8,7 @@ import br.com.midhatdrops.experianChallenge.domain.vendedor.infrastructure.dto.V
 import br.com.midhatdrops.experianChallenge.domain.vendedor.infrastructure.exceptions.MalformedCellphoneException;
 import br.com.midhatdrops.experianChallenge.domain.vendedor.infrastructure.repository.VendedorRepository;
 import br.com.midhatdrops.experianChallenge.domain.vendedor.service.VendedorService;
+import br.com.midhatdrops.experianChallenge.domain.vendedor.util.CellphoneFormatterUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
@@ -62,20 +63,22 @@ public class VendedorServiceImpl implements VendedorService {
              Optional<Atuacao> region = atuacaoRepository.findById(vendedor.getRegion());
              if(region.isPresent()) {
                   VendedorResponseDTO responseDTO = VendedorResponseDTO.builder()
+                          .nome(vendedor.getName())
                           .cidade(vendedor.getCity())
                           .dataInclusao(formatDate(vendedor.getCreatedAt()))
-                         .idade(vendedor.getAge())
-                          .telefone(vendedor.getCellphone())
+                          .idade(vendedor.getAge())
+                          .telefone(CellphoneFormatterUtil.formatCellphoneToSend(vendedor.getCellphone()))
                           .estados(region.get().getStates())
                           .estado(vendedor.getState().toString())
                          .build();
                  vendedorDTOS.add(responseDTO);
              } else {
                  VendedorResponseDTO responseDTO = VendedorResponseDTO.builder()
+                         .nome(vendedor.getName())
                          .cidade(vendedor.getCity())
                          .dataInclusao(formatDate(vendedor.getCreatedAt()))
                          .idade(vendedor.getAge())
-                         .telefone(vendedor.getCellphone())
+                         .telefone(CellphoneFormatterUtil.formatCellphoneToSend(vendedor.getCellphone()))
                          .estados(Collections.emptyList())
                          .estado(vendedor.getState().toString())
                          .build();

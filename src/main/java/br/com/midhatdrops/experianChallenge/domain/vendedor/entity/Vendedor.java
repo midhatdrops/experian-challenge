@@ -3,12 +3,13 @@ package br.com.midhatdrops.experianChallenge.domain.vendedor.entity;
 import br.com.midhatdrops.experianChallenge.domain.vendedor.enums.StateEnums;
 import br.com.midhatdrops.experianChallenge.domain.vendedor.infrastructure.dto.VendedorRequestDTO;
 import br.com.midhatdrops.experianChallenge.domain.vendedor.infrastructure.exceptions.MalformedCellphoneException;
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.jasypt.util.text.BasicTextEncryptor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
@@ -19,11 +20,30 @@ public class Vendedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true)
+    @NotNull
+    @NotBlank
     private String name;
+
+    @NotNull
+    @NotBlank
     private String cellphone;
+
+    @NotNull
+    @NotBlank
     private Integer age;
+
+    @NotNull
+    @NotBlank
     private String city;
+
+    @NotNull
+    @NotBlank
     private StateEnums state;
+
+    @NotNull
+    @NotBlank
     private String region;
 
     @CreationTimestamp
@@ -32,10 +52,11 @@ public class Vendedor {
     private Date updatedAt;
 
 
-    public Vendedor(Long id, final String name, final String cellphone, final Integer age, final String city, final StateEnums state, final String region) {
+    public Vendedor(Long id, final String name,  String cellphone, final Integer age, final String city, final StateEnums state, final String region) {
         this.id = id;
         this.name = name;
-        if(validateCellphone(cellphone)) {
+         String trim = cellphone.replace("-", "").replaceAll("\\s","");
+        if(validateCellphone(trim)) {
             this.cellphone = cellphone;
         } else {
             throw new MalformedCellphoneException(cellphone);
@@ -46,11 +67,11 @@ public class Vendedor {
         this.region = region;
     }
 
-    public Vendedor(final VendedorRequestDTO requestDTO) {
+    public Vendedor( VendedorRequestDTO requestDTO) {
         this.id = requestDTO.getId() == null ? null : requestDTO.getId();
         this.name = requestDTO.getName().trim();
         if(validateCellphone(requestDTO.getCellphone())) {
-            this.cellphone = requestDTO.getCellphone().trim();
+            this.cellphone = requestDTO.getCellphone();
         } else {
             throw new MalformedCellphoneException(requestDTO.getCellphone());
         }

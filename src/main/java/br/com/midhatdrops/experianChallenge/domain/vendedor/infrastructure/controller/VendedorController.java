@@ -25,13 +25,17 @@ public class VendedorController {
     private VendedorService service;
 
     @PostMapping
-    public ResponseEntity<VendedorRequestDTO> post(@RequestBody VendedorRequestDTO request) throws URISyntaxException {
+    public ResponseEntity<VendedorRequestDTO> post(@RequestBody VendedorRequestDTO request) {
         try {
             VendedorRequestDTO response = service.insert(request);
             return ResponseEntity.created(new URI("/vendedor/" + response.getId())).body(response);
         } catch (MalformedCellphoneException exception) {
             return ResponseEntity.badRequest().body(null);
-        } catch (Exception e ) {
+        } catch (URISyntaxException e) {
+            log.error(e.getMessage());
+            return ResponseEntity.internalServerError().body(null);
+        }
+        catch (Exception e ) {
             return ResponseEntity.internalServerError().body(null);
         }
 
