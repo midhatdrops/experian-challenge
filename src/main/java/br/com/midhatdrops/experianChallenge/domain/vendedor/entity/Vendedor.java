@@ -3,12 +3,13 @@ package br.com.midhatdrops.experianChallenge.domain.vendedor.entity;
 import br.com.midhatdrops.experianChallenge.domain.vendedor.enums.StateEnums;
 import br.com.midhatdrops.experianChallenge.domain.vendedor.infrastructure.dto.VendedorRequestDTO;
 import br.com.midhatdrops.experianChallenge.domain.vendedor.infrastructure.exceptions.MalformedCellphoneException;
+import com.sun.istack.NotNull;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.jasypt.util.text.BasicTextEncryptor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.util.Date;
 
 @Entity
@@ -19,11 +20,30 @@ public class Vendedor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(unique = true)
+    @NotNull
+    @NotBlank
     private String name;
+
+    @NotNull
+    @NotBlank
     private String cellphone;
+
+    @NotNull
+    @NotBlank
     private Integer age;
+
+    @NotNull
+    @NotBlank
     private String city;
+
+    @NotNull
+    @NotBlank
     private StateEnums state;
+
+    @NotNull
+    @NotBlank
     private String region;
 
     @CreationTimestamp
