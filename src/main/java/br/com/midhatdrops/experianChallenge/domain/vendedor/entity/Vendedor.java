@@ -89,5 +89,19 @@ public class Vendedor {
         return cellphone.matches("[0-9]{2}[9][0-9]{4,11}") && cellphone.length() == 11;
     }
 
-
+    @Override
+    public String toString() {
+         String[] split = name.split("\\s");
+        return "Vendedor{" +
+                "id=" + id +
+                ", First name='" + split[0] + '\'' +
+                ", cellphone 4-digits='" + cellphone.substring(0,4) + '\'' +
+                ", age=" + age +
+                ", city='" + city + '\'' +
+                ", state=" + state +
+                ", region='" + region + '\'' +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                '}';
+    }
 }

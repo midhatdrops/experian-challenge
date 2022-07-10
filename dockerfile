@@ -12,4 +12,5 @@ RUN mvn -f /home/app/pom.xml clean package -DskipTests -q
 FROM openjdk:11-jre-slim
 COPY --from=build /home/app/target/experianChallenge-0.0.1-SNAPSHOT.jar /usr/local/lib/demo.jar
 EXPOSE 8080
+ENV DATABASE_URL="jdbc:h2:mem:mydb" DATABASE_USERNAME="sa" DATABASE_PASSWORD="password"
 ENTRYPOINT ["java","-jar","/usr/local/lib/demo.jar"]
