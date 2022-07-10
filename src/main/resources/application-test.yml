@@ -1,11 +1,14 @@
 server:
   port: 8081
 
+encryptor:
+  password: "safeword"
+
 spring:
   datasource:
     driver-class-name: org.h2.Driver
-    url: ${DATABASE_URL:h2:mem:testdb}
-    username: ${DATABASE_USERNAME:sa}}
+    url: ${DATABASE_URL:jdbc:h2:mem:mydb}
+    username: ${DATABASE_USERNAME:sa}
     password: ${DATABASE_PASSWORD:password}
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect

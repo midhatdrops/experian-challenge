@@ -1,6 +1,9 @@
 server:
   port: 8081
 
+encrypt:
+  key: safeword
+
 spring:
   datasource:
     driver-class-name: org.h2.Driver

@@ -13,12 +13,14 @@ public class VendedorTests {
 
   @Test
     void shouldNotAllowIncorrectCellphone() {
-    assertThrows( MalformedCellphoneException.class, () -> new Vendedor("nome","11a321312",22,"cidade", StateEnums.SP,"região"));
+    assertThrows( MalformedCellphoneException.class, () -> new Vendedor(null,"nome","11a321312",22,"cidade", StateEnums.SP,"região"));
   }
 
   @Test
     void shouldCreateEntityCorrectly() {
-     Vendedor vendedor = new Vendedor("nome", "11976065151", 22, "cidade", StateEnums.SP, "região");
+     Vendedor vendedor = new Vendedor(null,"nome", "11976065151", 22, "cidade", StateEnums.SP, "região");
     assertEquals("11976065151",  vendedor.getCellphone());
   }
+
+
 }

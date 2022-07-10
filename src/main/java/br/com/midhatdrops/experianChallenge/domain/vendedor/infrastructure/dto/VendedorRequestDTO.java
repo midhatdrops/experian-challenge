@@ -2,10 +2,15 @@ package br.com.midhatdrops.experianChallenge.domain.vendedor.infrastructure.dto;
 
 import br.com.midhatdrops.experianChallenge.domain.vendedor.entity.Vendedor;
 import br.com.midhatdrops.experianChallenge.domain.vendedor.enums.StateEnums;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Getter
 public class VendedorRequestDTO {
 
+    private Long id;
     @JsonProperty("nome")
     private String name;
     @JsonProperty("celular")
@@ -23,6 +28,10 @@ public class VendedorRequestDTO {
     }
 
     public VendedorRequestDTO(Vendedor entity) {
+        if(entity.getId() != null) {
+            this.id = entity.getId();
+        }
+        this.id = null;
         this.name = entity.getName();
         this.cellphone = entity.getCellphone();
         this.age = entity.getAge();
@@ -31,27 +40,13 @@ public class VendedorRequestDTO {
         this.region = entity.getRegion();
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getCellphone() {
-        return cellphone;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public StateEnums getState() {
-        return state;
-    }
-
-    public String getRegion() {
-        return region;
+    public VendedorRequestDTO(final Long id, final String name, final String cellphone, final Integer age, final String city, final StateEnums state, final String region) {
+        this.id = id;
+        this.name = name;
+        this.cellphone = cellphone;
+        this.age = age;
+        this.city = city;
+        this.state = state;
+        this.region = region;
     }
 }
