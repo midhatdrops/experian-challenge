@@ -1,8 +1,14 @@
 server:
   port: 8080
 
-encrypt:
-  key: ${ENCRYPT_PASSWORD}
+management:
+  endpoint:
+    health:
+      show-details: "ALWAYS"
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 spring:
   datasource:
