@@ -56,6 +56,14 @@ public class VendedorServiceImplTest {
     @Spy
     private final Vendedor newVendedor = new Vendedor(requestDTO);
 
+    @BeforeEach
+    void setup() {
+        List<Vendedor> vendedors = Collections.singletonList(newVendedor);
+        PageImpl<Vendedor> vendedorsPage = new PageImpl<>(vendedors, PageRequest.of(0, 10), vendedors.size());
+        when(repository.findAll(any(Pageable.class))).thenReturn(vendedorsPage);
+        when(repository.findById(1L)).thenReturn(Optional.of(newVendedor));
+    }
+
 
   @Test
     void shouldCorrectlySaveEntity() {
@@ -75,9 +83,6 @@ public class VendedorServiceImplTest {
   @DirtiesContext
   @Test
     void shouldCorrectlyReturnVendedorsWithNoOptional() {
-       List<Vendedor> vendedors = Arrays.asList(newVendedor);
-       PageImpl<Vendedor> vendedorsPage = new PageImpl<>(vendedors, PageRequest.of(0, 10), vendedors.size());
-       when(repository.findAll(any(Pageable.class))).thenReturn(vendedorsPage);
       Optional<Atuacao> atuacao = Optional.empty();
       when(atuacaoRepository.findById(any(String.class))).thenReturn(atuacao);
       when(newVendedor.getCreatedAt()).thenReturn(Date.from(Instant.now()));
@@ -92,9 +97,6 @@ public class VendedorServiceImplTest {
     @DirtiesContext
     @Test
     void shouldCorrectlyReturnVendedorsWithEmptyStates() {
-        List<Vendedor> vendedors = Arrays.asList(newVendedor);
-        PageImpl<Vendedor> vendedorsPage = new PageImpl<>(vendedors, PageRequest.of(0, 10), vendedors.size());
-        when(repository.findAll(any(Pageable.class))).thenReturn(vendedorsPage);
         Optional<Atuacao> atuacao = Optional.of(new Atuacao("Sudeste", Collections.emptyList()));
         when(atuacaoRepository.findById(any(String.class))).thenReturn(atuacao);
         when(newVendedor.getCreatedAt()).thenReturn(Date.from(Instant.now()));
@@ -110,9 +112,6 @@ public class VendedorServiceImplTest {
     @DirtiesContext
     @Test
     void shouldCorrectlyReturnVendedorsWithBAState() {
-        List<Vendedor> vendedors = Arrays.asList(newVendedor);
-        PageImpl<Vendedor> vendedorsPage = new PageImpl<>(vendedors, PageRequest.of(0, 10), vendedors.size());
-        when(repository.findAll(any(Pageable.class))).thenReturn(vendedorsPage);
         Optional<Atuacao> atuacao = Optional.of(new Atuacao("Sudeste", List.of(StateEnums.BA)));
         when(atuacaoRepository.findById(any(String.class))).thenReturn(atuacao);
         when(newVendedor.getCreatedAt()).thenReturn(Date.from(Instant.now()));
@@ -127,7 +126,6 @@ public class VendedorServiceImplTest {
   @Test
   @DirtiesContext
     void shouldCorrectlyReturnOneVendedorWithEmptyState() {
-      when(repository.findById(1L)).thenReturn(Optional.of(newVendedor));
       Optional<Atuacao> atuacao = Optional.of(new Atuacao("Sudeste", Collections.emptyList()));
       when(atuacaoRepository.findById(any(String.class))).thenReturn(atuacao);
       when(newVendedor.getCreatedAt()).thenReturn(parseDate("10-07-2022"));
@@ -141,7 +139,6 @@ public class VendedorServiceImplTest {
     @Test
     @DirtiesContext
     void shouldCorrectlyReturnOneVendedorWithOneState() {
-        when(repository.findById(1L)).thenReturn(Optional.of(newVendedor));
         Optional<Atuacao> atuacao = Optional.of(new Atuacao("Sudeste", List.of(StateEnums.DF)));
         when(atuacaoRepository.findById(any(String.class))).thenReturn(atuacao);
         when(newVendedor.getCreatedAt()).thenReturn(parseDate("10-07-2022"));
@@ -155,7 +152,6 @@ public class VendedorServiceImplTest {
     @Test
     @DirtiesContext
     void shouldCorrectlyReturnOneVendedorWithNoOptional() {
-        when(repository.findById(1L)).thenReturn(Optional.of(newVendedor));
         Optional<Atuacao> atuacao = Optional.empty();
         when(atuacaoRepository.findById(any(String.class))).thenReturn(atuacao);
         when(newVendedor.getCreatedAt()).thenReturn(parseDate("10-07-2022"));
