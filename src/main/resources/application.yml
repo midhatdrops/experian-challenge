@@ -1,6 +1,8 @@
 server:
   port: 8080
 
+encrypt:
+  key: ${ENCRYPT_PASSWORD}
 
 spring:
   datasource:
