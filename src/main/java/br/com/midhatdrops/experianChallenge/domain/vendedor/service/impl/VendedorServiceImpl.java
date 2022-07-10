@@ -10,6 +10,8 @@ import br.com.midhatdrops.experianChallenge.domain.vendedor.infrastructure.repos
 import br.com.midhatdrops.experianChallenge.domain.vendedor.service.VendedorService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +33,7 @@ public class VendedorServiceImpl implements VendedorService {
     private AtuacaoRepository atuacaoRepository;
 
 
+    @CacheEvict(value = "vendedors",allEntries = true)
     @Override
     public VendedorRequestDTO insert(VendedorRequestDTO requestDTO) {
         try {
@@ -47,6 +50,7 @@ public class VendedorServiceImpl implements VendedorService {
 
     }
 
+    @Cacheable(value = "vendedors")
     @Override
     public List<VendedorResponseDTO> getAll(Integer page) {
 
@@ -82,6 +86,7 @@ public class VendedorServiceImpl implements VendedorService {
         return vendedorDTOS;
     }
 
+    @Cacheable(value = "vendedors")
     @Override
     public VendedorResponseDTO getOne(final Long id) {
          Vendedor vendedor = repository.findById(id).orElseThrow(() -> new NoSuchElementException("Not found id:" + id));
